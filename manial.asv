@@ -252,10 +252,9 @@ while iter<opts.max_iter && ~cstop
     %nuk = rho * nuk;
     if deltak_ratio > sigtol && deltak >= tol
         nuk = min(rho * nuk, opts.nu_max);
-    elseif deltak < tol && kkt_error > tol*10
-        nuk = max((delta0*log10(2)) /(deltak*(iter+1)^2*log10(iter)), opts.nu_min);
+    %elseif deltak < tol && kkt_error > tol*10
+     %   nuk = max(nuk / rho, opts.nu_min);
     end
-
    
     cstop = (kkt_error<tol  && deltak < tol ) || obj<opts.obj+1e-10 ;
     if cstop

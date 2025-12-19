@@ -23,7 +23,7 @@ end
 n_set=[ 200; 300; 500; 1000]; %dimension
 n_set = [200;500;100];
 %format long
-r_set = [ 10;20];   % rank
+r_set = [ 20];   % rank
 %r_set = 5;
 
 mu_set = [0.4;0.6;0.8];

@@ -192,6 +192,10 @@ while iter<opts.max_iter && ~cstop
     Y = h.prox(AXZ, 1/nuk, h.data{:});
     deltak_p =deltak;
     deltak = norm(AX - Y,'fro')/(1+norm(AX,'fro') + norm(Y,'fro'));
+    if iter==1
+        delta0 =deltak; deltak_p = norm(Aop.applyA(X0) - Y,'fro');
+    end
+    deltak = norm(AX - Y,'fro')/(1+norm(AX,'fro') + norm(Y,'fro'));
 
     deltak_ratio = deltak/deltak_p;
 
@@ -222,8 +226,8 @@ while iter<opts.max_iter && ~cstop
 
     if deltak_ratio > sigtol && deltak >= tol
         nuk = min(rho * nuk, opts.nu_max);
-        %elseif deltak < tol && kkt_error > tol*10
-        %   nuk = max(nuk / rho, opts.nu_min);
+    elseif deltak < tol && kkt_error > tol*10
+        nuk = max((delta0*log10(2)) /(deltak*(iter+1)^2*log10(iter)), opts.nu_min);
     end
 
     %(kkt_error<tol  && deltak < tol ) ||
